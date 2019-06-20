@@ -1,28 +1,28 @@
 "use strict";
 
 export default {
-    getUsers(state, getters) {
+    getQuizzes(state, getters) {
         return _ => {
             try {
-                return state.data._embedded.items;
+                return state.quizzes._embedded.items;
             } catch(e) {
                 return [];
             }
         }
     },
-    getGroups(state, getters) {
+    getQuestions(state, getters) {
         return _ => {
             try {
-                return state.groups;
+                return state.questions._embedded.items;
             } catch(e) {
                 return [];
             }
         }
     },
-    getChains(state, getters) {
+    getAnswers(state, getters) {
         return _ => {
             try {
-                return state.chains;
+                return state.answers._embedded.items;
             } catch(e) {
                 return [];
             }

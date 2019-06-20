@@ -70,6 +70,6 @@ module.exports = {
     ],
     output: {
         path: path.resolve(__dirname, '../../public/admin/js'),
-        filename: 'adminUsers.js',
+        filename: 'quiz.bundle.js',
     },
 };

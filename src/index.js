@@ -5,7 +5,7 @@ import { mapActions } from 'vuex';
 import Layout from './layout';
 import store from './store';
 
-let el = document.querySelector('#users-app');
+let el = document.querySelector('#quiz-app');
 
 let vm = new Vue({
     store,
@@ -13,7 +13,7 @@ let vm = new Vue({
         params: el.dataset,
     },
     methods: {
-        ...mapActions(['init', 'initGroupsChains']),  
+        ...mapActions(['init']),  
     },
     created() {
         this.init(this.params)

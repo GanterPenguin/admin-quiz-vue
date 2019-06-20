@@ -1,8 +1,7 @@
 "use strict";
 
 export default {
-    data: undefined,
-    users: undefined,
-    groups: undefined,
-    chains: undefined,
+    quizzes: undefined,
+    questions: undefined,
+    answers: undefined,
 }

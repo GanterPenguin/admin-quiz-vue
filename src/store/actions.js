@@ -4,20 +4,41 @@ export default {
     
     async init(context, params) {
     
-        let apiUsers = await fetch(params.apiLinkUsers);
-        let apiGroups = await fetch(params.apiLinkGroups);
+        let apiQuiz = await fetch(params.apiLink);
 
-        if(!apiUsers.ok && !apiGroups.ok) {
+        if(!apiQuiz.ok) {
             throw new Error('Connection error');
         }
 
-        let dataUsers = await apiUsers.json();
-        let dataGroups = await apiGroups.json();
-        
-        let groups = dataGroups.groups;
-        let chains = dataGroups.chains;
+        let data = await apiQuiz.json();
 
-        context.commit('init', {dataUsers, groups, chains});
+        let apiQuizzes = await fetch(data._links.quizzes.href);
+        let apiQuestions = await fetch(data._links.questions.href);
+        let apiAnswers = await fetch(data._links.answers.href);
+
+        if(!apiQuizzes.ok && !apiQuestions.ok && !apiAnswers.ok) {
+            throw new Error('Connection error');
+        }
+
+        let quizzes = await apiQuizzes.json();
+        let questions = await apiQuestions.json();
+        let answers = await apiAnswers.json();
+
+        context.commit('init', { quizzes, questions, answers });
+    
+    },
+
+    async changePage(context, link) {
+     
+        let apiQuizzes = await fetch(link);
+
+        if(!apiQuizzes.ok) {
+            throw new Error('Connection error');
+        }
+
+        let quizzes = await apiQuizzes.json();
+
+        context.commit('changePage', quizzes);
     
     },
 

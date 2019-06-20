@@ -3,8 +3,11 @@
 export default {
     
     init(state, data) {
-        state.data = data.dataUsers;
-        state.groups = data.groups;
-        state.chains = data.chains; 
+        state.quizzes = data.quizzes;
+        state.questions = data.questions;
+        state.answers = data.answers;
     },
+    changePage(state, quizzes) {
+        state.quizzes = quizzes;
+    }
 }

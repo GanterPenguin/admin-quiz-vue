@@ -1,13 +1,13 @@
 <script>
     import { mapGetters, mapActions, mapState } from 'vuex';
-    import User from './user';
     import Pager from './pager';
+    import Quiz from './quiz';
 
 export default {
 
     components: {
-        'user': User,
         'pager': Pager,
+        'quiz': Quiz,
     },
     methods: {
         ...mapActions([
@@ -20,19 +20,12 @@ export default {
     },
     computed: {
         ...mapGetters([
-            'getGroups',
-            'getChains',
-            'getUsers'
+            'getQuizzes',
         ]),
-        users() {
-            return this.getUsers();
-        },
-        groups() {
-            return this.getGroups();
-        },
-        chains() {
-            return this.getChains();
-        },
+        quizzes() {
+            return this.getQuizzes();
+        }
+
     },
 
 }
@@ -41,24 +34,18 @@ export default {
 
 <template lang="pug">
 
-.users 
+.quiz-app 
 
-    .table.box
+    quiz(v-for="quiz in quizzes" 
+        v-bind:key="quiz.id"
+        :title="quiz.title" 
+        :creationDate="quiz.creationDate"
+        :visible="quiz.visible"
+        :sort="quiz.sort")
 
-        .header
-            .zelle.inline-m
-                a(href="#") Телефон
-            .zelle.inline-m
-                a(href="#") Фамилия
-            .zelle.inline-m
-                a(href="#") Имя
-            .zelle.inline-m
-                a(href="#") Отчество
-            .zelle.inline-m
-                a(href="#") email
-
-        user(v-for="user in users" v-bind:key="user.id" :userId="user.id" :user="user" :groupsProp="groups" :chainsProp="chains")
-        
-        pager
+    pager
 </template>
 
+<style lang="scss">
+@import "./src/scss/main.scss";
+</style>
