@@ -4,13 +4,15 @@ export default {
     
     init(state, data) {
         state.quizzes = data.quizzes;
+        state.quizzesPage = data.quizzesPage;
         state.initialized = true;
     },
     setQuestions(state, data) {
         state.questions = data.questions;
     },
-    changePage(state, quizzes) {
-        state.quizzes = quizzes;
+    changePage(state, data) {
+        state.quizzes = data.quizzes;
+        state.quizzesPage = data.link;
     },
     appendQuiz(state, quiz) {
         state.quizzes._embedded.items.push(quiz);

@@ -10,7 +10,7 @@ export default {
     },
     methods: {
         ...mapActions([
-            'deleteQuiz'
+            'deleteItem'
         ]),
 
     },
@@ -45,7 +45,7 @@ export default {
 
         .quiz__delete-form(v-if="deleting")
 
-            .quiz__delete.quiz__delete_yes(@click="deleteQuiz(quiz)")
+            .quiz__delete.quiz__delete_yes(@click="deleteItem(quiz)")
 
             .quiz__delete.quiz__delete_no(@click="deleting=false")
 

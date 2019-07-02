@@ -19,8 +19,9 @@ export default {
         }
 
         let quizzes = await apiQuizzes.json();
+        let quizzesPage = data._links.quizzes.href;
 
-        context.commit('init', { quizzes });
+        context.commit('init', { quizzes, quizzesPage });
     
     },
 
@@ -53,18 +54,17 @@ export default {
 
         let quizzes = await apiQuizzes.json();
 
-        context.commit('changePage', quizzes);
+        context.commit('changePage', {quizzes, link});
     
     },
 
     async appendQuiz(context, quizTitle) {
-        let link = context.state.quizzes._links.href;
+        let link = context.state.quizzes._links.self.href;
+        let body = JSON.stringify({title: quizTitle});
 
         let response = await fetch(link, {
             method: 'POST',
-            body: {
-                title: quizTitle,
-            },
+            body: body,
         });
         if(!response.ok){
             throw new Error('Connection error');
@@ -72,10 +72,10 @@ export default {
 
         let quiz = await response.json();
 
-        context.commit('appendQuiz',  quiz);
+        context.dispatch('changePage', context.state.quizzesPage);
     }, 
 
-    async deleteQuiz(context, params) {
+    async deleteItem(context, params) {
         let response = await fetch(params._links.self.href, {
             method: 'DELETE',
         });
@@ -83,7 +83,7 @@ export default {
             throw new Error('Connection error');
         }
 
-        context.commit('deleteQuiz', params.id);
+        context.dispatch('changePage', context.state.quizzesPage);
     },
 
     async deleteQuestion(context, params) {

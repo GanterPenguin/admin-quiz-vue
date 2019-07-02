@@ -22,6 +22,7 @@ export default {
     computed: {
         ...mapState({
             quizzes: state => state.quizzes,
+            quizzesPage: state => state.quizzesPage,
         }),
 
     },
@@ -36,7 +37,7 @@ export default {
 
     h1.quiz-title Опросы
 
-    input(:value="quizTitle" placeholder="Новый опрос")
+    input(v-model="quizTitle" placeholder="Новый опрос")
     button(@click="appendQuiz(quizTitle)") Добавить
 
     quiz(v-for="quiz in quizzes._embedded.items" v-bind:key="quiz.id" :quiz="quiz")
