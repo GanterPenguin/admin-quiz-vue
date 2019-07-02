@@ -58,7 +58,7 @@ export default {
     },
 
     async appendQuiz(context, quizTitle) {
-        let link = context.state.quizzes.links.href;
+        let link = context.state.quizzes._links.href;
 
         let response = await fetch(link, {
             method: 'POST',
