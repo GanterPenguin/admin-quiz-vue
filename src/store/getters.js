@@ -15,7 +15,7 @@ export default {
             try {
                 return state.questions._embedded.items;
             } catch(e) {
-                return [];
+                return undefined;
             }
         }
     },

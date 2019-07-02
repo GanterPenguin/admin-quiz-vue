@@ -54,7 +54,7 @@ export default {
 <template>
     <div class='pager'>
 
-        <div v-if='linkPrev !== undefined' class='container' @click='setUsers(linkPrev)'>
+        <div v-if='linkPrev !== undefined' class='container' @click='setQuizzes(linkPrev)'>
             <div class='page'>◄</div>
         </div>
 
