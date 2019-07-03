@@ -48,6 +48,7 @@ export default {
         ]),
         setPage(href) {
             this.setQuestions({link: href, id: this.id});
+            window.scrollTo(0,0);
         },
     },
 }

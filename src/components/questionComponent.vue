@@ -22,7 +22,17 @@ export default {
     computed: {
         ...mapGetters([
         ]),
-    },
+        content() {
+            if(this.question._embedded.content) {
+                return this.question._embedded.content;
+            } else {
+                let content = {
+                    text: "",
+                };
+                return content;
+            }
+        },
+    }
 
 }
 </script>
@@ -32,7 +42,7 @@ export default {
 
 .quiz(v-bind:class="{ quiz_deleting: deleting }")
 
-    .quiz__title(v-bind:class="{ quiz__title_white: deleting }")
+    .quiz__title(v-bind:class="{ quiz__title_white: deleting }") {{ content.text }}
 
     .quiz__date(v-bind:class="{ quiz__date_white: deleting }")  
 

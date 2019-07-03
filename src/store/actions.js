@@ -39,8 +39,9 @@ export default {
         }
 
         let questions = await response.json(); 
+        let link = params.link;
 
-        context.commit('setQuestions', { questions });
+        context.commit('setQuestions', { questions, link });
     
     },
 
@@ -86,6 +87,28 @@ export default {
         context.dispatch('changePage', context.state.quizzesPage);
     },
 
+    async appendQuestion(context, params) {
+        let body = {
+            content: {
+                type: "text",
+                text: params.text,
+            }
+        };
+        let response = await fetch(params.link, {
+            method: 'POST',
+            body: JSON.stringify(body),
+        }); 
+
+        if(!response.ok) {
+            throw new Error('Connection error');
+        }
+
+        let id = params.quiz_id;
+        let link = context.state.questionsPage;
+
+        context.dispatch('setQuestions', { id, link });
+    },
+
     async deleteQuestion(context, params) {
         let response = await fetch(params._links.self.href, {
             method: 'DELETE',
@@ -93,7 +116,9 @@ export default {
         if(!response.ok) {
             throw new Error('Connection error');
         }
+        let id = params.quiz_id;
+        let link = context.state.questionsPage;
 
-        context.commit('deleteQuestion', params.id);
+        context.dispatch('setQuestions', { id, link });
     },
 }

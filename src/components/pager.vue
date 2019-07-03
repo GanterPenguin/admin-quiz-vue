@@ -45,6 +45,7 @@ export default {
         ]),
         setQuizzes(link) {
             this.changePage(link);
+            window.scrollTo(0,0);
         },
     },
 }

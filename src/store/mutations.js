@@ -9,6 +9,7 @@ export default {
     },
     setQuestions(state, data) {
         state.questions = data.questions;
+        state.questionsPage = data.link;
     },
     changePage(state, data) {
         state.quizzes = data.quizzes;

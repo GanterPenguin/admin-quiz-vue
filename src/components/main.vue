@@ -8,16 +8,22 @@ export default {
         'pager': Pager,
         'quiz': Quiz,
     },
-    methods: {
-        ...mapActions([
-            'appendQuiz'
-        ]),
-
-    },
     data: function () {
         return {
             quizTitle: '',
         }
+    },
+    methods: {
+        ...mapActions([
+            'appendQuiz'
+        ]),
+        send(title) {
+            if(title.length>0) {
+                this.appendQuiz(title);
+                this.quizTitle = '';
+            }
+        },
+
     },
     computed: {
         ...mapState({
@@ -38,7 +44,7 @@ export default {
     h1.quiz-title Опросы
 
     input(v-model="quizTitle" placeholder="Новый опрос")
-    button(@click="appendQuiz(quizTitle)") Добавить
+    button(@click="send(quizTitle)") Добавить
 
     quiz(v-for="quiz in quizzes._embedded.items" v-bind:key="quiz.id" :quiz="quiz")
 
