@@ -16,7 +16,9 @@ export default {
     },
     data: function () {
         return {
+            adding: false,
             deleting: false,
+            responseType: '',
         }
     },
     computed: {
@@ -40,25 +42,49 @@ export default {
 
 <template lang="pug">
 
-.quiz(v-bind:class="{ quiz_deleting: deleting }")
+.question-wrapper
 
-    .quiz__title(v-bind:class="{ quiz__title_white: deleting }") {{ content.text }}
+    .question(v-bind:class="{ question_deleting: deleting }")
 
-    .quiz__date(v-bind:class="{ quiz__date_white: deleting }")  
+        .question__title(v-bind:class="{ question__title_white: deleting }") {{ content.text }}
 
-    input.quiz__sort(:value="question.sort") 
+        .question__date(v-bind:class="{ question__date_white: deleting }")  
 
-    .quiz__actions
+        input.question__sort(:value="question.sort") 
 
-        .quiz__visibility {{ question.visible }}
+        .question__actions
 
-        .quiz__delete(@click="deleting=true")
+            .question__add(@click="adding=!adding")
 
-        .quiz__delete-form(v-if="deleting")
+            .question__visibility {{ question.visible }}
 
-            .quiz__delete.quiz__delete_yes(@click="deleteQuestion(question)")
+            .question__delete(@click="deleting=true")
 
-            .quiz__delete.quiz__delete_no(@click="deleting=false")
+            .question__delete-form(v-if="deleting")
+
+                .question__delete.question__delete_yes(@click="deleteQuestion(question)")
+
+                .question__delete.question__delete_no(@click="deleting=false")
+
+    .add-form(v-if="adding")
+
+        .add-form__head
+
+            .add-form__title Добавить варианты ответов
+
+            select(name="responseType" v-model="responseType" autocomplete="off")
+                option(value="" selected) Выберите тип ответов
+                option(value="radio") Один вариант ответа
+                option(value="checkbox") Несколько вариантов ответа
+                option(value="radioFree") Один вариант ответа + свободный
+                option(value="checkboxFree") Несколько вариантов ответа + свободный
+
+        .add-form__options 
+
+            .add-form__option Вариант 1
+
+        input(type="text").add-form__input
+        button().add-form__button Добавить вариант ответа
 
 </template>
 

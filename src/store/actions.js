@@ -1,9 +1,9 @@
 "use strict";
 
 export default {
-    
+
     async init(context, params) {
-    
+
         let apiQuiz = await fetch(params.apiLink);
 
         if(!apiQuiz.ok) {
@@ -22,7 +22,7 @@ export default {
         let quizzesPage = data._links.quizzes.href;
 
         context.commit('init', { quizzes, quizzesPage });
-    
+
     },
 
     async setQuestions(context, params) {
@@ -31,7 +31,7 @@ export default {
         } else {
             let link = `${context.state.quizzes._links.self.href}/${params.id}/questions`;
         }
-    
+
         let response = await fetch(link);
 
         if(!response.ok) {
@@ -42,11 +42,11 @@ export default {
         let link = params.link;
 
         context.commit('setQuestions', { questions, link });
-    
+
     },
 
     async changePage(context, link) {
-     
+
         let apiQuizzes = await fetch(link);
 
         if(!apiQuizzes.ok) {
@@ -56,7 +56,7 @@ export default {
         let quizzes = await apiQuizzes.json();
 
         context.commit('changePage', {quizzes, link});
-    
+
     },
 
     async appendQuiz(context, quizTitle) {
@@ -90,7 +90,7 @@ export default {
     async appendQuestion(context, params) {
         let body = {
             content: {
-                type: "text",
+                type: 'text',
                 text: params.text,
             }
         };

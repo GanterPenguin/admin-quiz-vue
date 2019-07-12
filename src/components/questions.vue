@@ -25,6 +25,7 @@ export default {
     data: function () {
         return {
             questionText: '',
+            questionType: 'radio',
         }
     },
     computed: {
@@ -46,17 +47,17 @@ export default {
 <template lang="pug">
 
 .questions(v-if="questions")
-    
+
     router-link(:to="{path: '/'}").quiz-title Вернуться к опросам
 
     h1.quiz-title Вопросы  # {{id}}
 
-    input(v-model="questionText" placeholder="Новый вопрос")
-    button(@click="send({text: questionText, link: questions._links.self.href, quiz_id: id})") Добавить
+    .questions-form
+        input(v-model="questionText" name="questionText" placeholder="Новый вопрос").questions-form__input
+        button(@click="send({text: questionText, link: questions._links.self.href, quiz_id: id, type: questionType})").questions-form__submit Добавить
 
     question(v-for="question in questions._embedded.items" :key="question.id" :question="question") 
 
     pager(:id="id")
 
 </template>
-
