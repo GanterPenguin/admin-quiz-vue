@@ -10,7 +10,7 @@ export default {
         'pager': Pager,
     },
     methods: {
-        ...mapActions([
+        ...mapActions('questions', [
             'setQuestions',
             'appendQuestion',
         ]),
@@ -29,15 +29,22 @@ export default {
         }
     },
     computed: {
-        ...mapState({
+        ...mapState('questions',{
             questions: state => state.questions,
+        }),
+        ...mapState('quizzes', {
+            quizzes: state => state.quizzes,
         }),
         id() {
             return this.$route.params.id;
         },
     },
-    created() {
-        this.setQuestions( { id: this.$route.params.id } );
+    watch: {
+        quizzes(newVal, oldVal) {
+            if(newVal) {
+                this.setQuestions( { id: this.$route.params.id } );
+            }
+        },
     },
 
 }

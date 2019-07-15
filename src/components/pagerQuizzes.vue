@@ -5,7 +5,7 @@ import { mapState, mapGetters, mapActions } from 'vuex';
 export default {
 
     computed: {
-        ...mapState({
+        ...mapState('quizzes', {
             limit: state => {
                 try {
                     return state.quizzes.limit;
@@ -40,7 +40,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions([
+        ...mapActions('quizzes', [
             'changePage',
         ]),
         setQuizzes(link) {

@@ -1,6 +1,6 @@
 <script>
-    import { mapGetters, mapActions, mapState } from 'vuex';
-import Pager from './components/pager';
+import { mapGetters, mapActions, mapState } from 'vuex';
+import Pager from './components/pagerQuestions';
 
 export default {
 
@@ -11,6 +11,9 @@ export default {
         ...mapActions([
             'init',
         ]),
+        ...mapActions('quizzes', [
+            'initQuizzes',
+        ]),
 
     },
     data: function () {
@@ -19,11 +22,23 @@ export default {
     },
     computed: {
         ...mapState({
-            initialized: state => state.initialized,
+            initializedApi: state => state.initialized,
+            apiData: state => state.apiData,
         }),
+        ...mapState('quizzes', {
+            initializedQuizzes: state => state.initialized,
+        }),
+
+    },
+    watch: {
+        apiData(newVal, oldVal) {
+            if(!this.initializedQuizzes) {
+                this.initQuizzes(newVal);
+            }
+        },
     },
     created() {
-        if(!this.initialized) {
+        if(!this.initializedApi) {
             this.init(this.$root.params);
         }
     },
@@ -34,7 +49,7 @@ export default {
 
 <template lang="pug">
 
-.quiz-app(v-if="initialized") 
+.quiz-app(v-if="initializedApi && initializedQuizzes") 
 
     router-view
 

@@ -1,10 +1,8 @@
 "use strict";
 
 export default {
-    
     init(state, data) {
-        state.quizzes = data.quizzes;
-        state.quizzesPage = data.quizzesPage;
+        state.apiData = data;
         state.initialized = true;
     },
     setQuestions(state, data) {
@@ -26,4 +24,4 @@ export default {
         let index = state.questions._embedded.items.map(item => item.id).indexOf(id);
         state.questions._embedded.items.splice(index, 1);
     },
-}
+};

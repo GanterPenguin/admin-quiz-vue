@@ -8,7 +8,7 @@ export default {
         "id",
     ],
     computed: {
-        ...mapState({
+        ...mapState('questions', {
             limit: state => {
                 try {
                     return state.questions.limit;
@@ -43,7 +43,7 @@ export default {
         }
     },
     methods: {
-        ...mapActions([
+        ...mapActions('questions', [
             'setQuestions',
         ]),
         setPage(href) {

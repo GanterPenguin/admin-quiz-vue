@@ -6,11 +6,11 @@ import { mapActions } from 'vuex';
 import Layout from './layout';
 import store from './store';
 
-import MainComponent from './components/main';
+import QuizzesComponent from './components/quizzes';
 import QuestionsComponent from './components/questions';
 
 const routes = [
-    { path: '/', component: MainComponent },
+    { path: '/', component: QuizzesComponent },
     { path: '/quiz/:id', component: QuestionsComponent },
     //{ path: '/questions/:id', component: QuizComponent },
 ];
@@ -28,7 +28,7 @@ let vm = new Vue({
         params: el.dataset,
     },
     methods: {
-        ...mapActions(['init']),  
+        ...mapActions(['init']),
     },
     created() {
         this.init(this.params)

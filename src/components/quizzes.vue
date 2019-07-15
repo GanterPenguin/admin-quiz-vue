@@ -1,6 +1,6 @@
 <script>    import { mapGetters, mapActions, mapState } from 'vuex';
-    import Pager from './pager';
-    import Quiz from './quizComponent';
+import Pager from './pagerQuizzes';
+import Quiz from './quizComponent';
 
 export default {
 
@@ -14,8 +14,9 @@ export default {
         }
     },
     methods: {
-        ...mapActions([
-            'appendQuiz'
+        ...mapActions('quizzes', [
+            'initQuizzes',
+            'appendQuiz',
         ]),
         send(title) {
             if(title.length>0) {
@@ -27,10 +28,19 @@ export default {
     },
     computed: {
         ...mapState({
+            apiData: state => state.apiData,
+        }),
+        ...mapState('quizzes', {
             quizzes: state => state.quizzes,
             quizzesPage: state => state.quizzesPage,
         }),
-
+    },
+    watch: {
+        apiData (newVal, oldVal) {
+            if(newVal && !quizzes) {
+                this.initQuizzes(newVal);
+            }
+        }
     },
 
 }

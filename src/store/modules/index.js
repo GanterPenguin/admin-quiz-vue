@@ -1,11 +1,11 @@
 'use strict';
 
 import questions from './questions';
-import quizes from './quizes';
+import quizzes from './quizzes';
 
 export default {
 
     questions,
-    quizes,
+    quizzes,
 
 };
