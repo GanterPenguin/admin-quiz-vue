@@ -59,11 +59,13 @@ export default {
 
     async updateQuiz(context, params) {
 
+        let visible = params.visible ? 1 : 0;
+
         let quiz = {
             id: params.id,
             title: params.title,
             creationDate: params.creationDate,
-            visible: params.visible,
+            visible: visible,
             sort: params.sort,
         };
 
