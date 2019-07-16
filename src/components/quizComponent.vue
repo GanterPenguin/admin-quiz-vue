@@ -9,7 +9,7 @@ export default {
     components: {
     },
     methods: {
-        ...mapActions([
+        ...mapActions('quizzes', [
             'deleteItem'
         ]),
 
@@ -32,7 +32,7 @@ export default {
 .quiz(v-bind:class="{ quiz_deleting: deleting }")
 
     router-link(:to="{path: 'quiz/' + quiz.id}" v-bind:class="{ quiz__title_white: deleting }").quiz__title {{ quiz.title }}
-        
+
     .quiz__date(v-bind:class="{ quiz__date_white: deleting }") {{ quiz.creationDate }}
 
     input(:value="quiz.sort").quiz__sort  

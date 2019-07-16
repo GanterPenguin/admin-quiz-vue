@@ -49,16 +49,20 @@ export default {
 
 <template lang="pug">
 
-.quiz-main(v-if="quizzes")
+.quiz-wrapper
 
-    h1.quiz-title Опросы
+    .quiz-main(v-if="quizzes")
 
-    input(v-model="quizTitle" placeholder="Новый опрос")
-    button(@click="send(quizTitle)") Добавить
+        h1.quiz-title Опросы
 
-    quiz(v-for="quiz in quizzes._embedded.items" v-bind:key="quiz.id" :quiz="quiz")
+        input(v-model="quizTitle" placeholder="Новый опрос")
+        button(@click="send(quizTitle)") Добавить
 
-    pager
+        quiz(v-for="quiz in quizzes._embedded.items" v-bind:key="quiz.id" :quiz="quiz")
+
+        pager
+
+    .quiz-main__loading(v-else="quizzes") Загрузка...
 
 </template>
 

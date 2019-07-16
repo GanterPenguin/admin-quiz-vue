@@ -6,7 +6,7 @@ export default {
         if(params.link){
             let link = `${params.link}/${params.id}/questions`;
         } else {
-            let link = `${context.rootState.apiData._links.self.href}/${params.id}/questions`;
+            let link = `${context.rootState.apiData._links.self.href}/quizzes/${params.id}/questions`;
         }
 
         let response = await fetch(link);
@@ -55,6 +55,39 @@ export default {
         let link = context.state.questionsPage;
 
         context.dispatch('setQuestions', { id, link });
+    },
+
+    async patchResponse(context, params) {
+        let patch = [];
+        let link = `${params.link}/response`;
+        if(params.type) {
+            let bodyType = {
+                op: "add",
+                path: '/type',
+                value: params.type,
+            };
+            patch.push(bodyType);
+        }
+        if(params.options) {
+            let bodyOptions = {
+                op: "add",
+                path: "/options",
+                value: params.options,
+            };
+            patch.push(bodyOptions);
+        }
+
+        let response = await fetch (link, {
+            method: "PATCH",
+            body: JSON.stringify(patch),
+        });
+
+        if(response.ok) {
+            sf.alert([{text: "Сохранено", type: "ok"}]);
+        } else {
+            sf.alert([{ text: "Ошибка", type: 'err' }]);
+        };
+
     },
 
 };

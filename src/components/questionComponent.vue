@@ -9,16 +9,21 @@ export default {
         "question",
     ],
     methods: {
-        ...mapActions([
-            'deleteQuestion'
+        ...mapActions('questions', [
+            'deleteQuestion',
+            'patchResponse',
         ]),
-
+        addOption(text) {
+            this.responseOptions.push(text);
+            this.optionText = '';
+            this.patchResponse({ link: this.question._links.self.href, options: this.responseOptions, type: this.responseType });
+        }
     },
     data: function () {
         return {
             adding: false,
             deleting: false,
-            responseType: '',
+            optionText: '',
         }
     },
     computed: {
@@ -34,6 +39,36 @@ export default {
                 return content;
             }
         },
+        responseType: {
+            get() {
+                let object = this.question._embedded.response;
+                if(object && object.type) {
+                    return object.type;
+                } else {
+                    return "radio";
+                };
+            },
+            set(value) {
+                if(this.question._embedded.response) {
+                    this.question._embedded.response.type = value;
+                    this.patchResponse({ link: this.question._links.self.href, type: this.responseType });
+                } else {
+                    this.question._embedded.response = {
+                        type: value,
+                        options: [],
+                    };
+                };
+            },
+        },
+        responseOptions: {
+            get() {
+                if(this.question._embedded.response) {
+                    return this.question._embedded.response.options;
+                } else {
+                    return [];
+                };
+            },
+        }
     }
 
 }
@@ -48,7 +83,7 @@ export default {
 
         .question__title(v-bind:class="{ question__title_white: deleting }") {{ content.text }}
 
-        .question__date(v-bind:class="{ question__date_white: deleting }")  
+        .question__date(v-bind:class="{ question__date_white: deleting }")
 
         input.question__sort(:value="question.sort") 
 
@@ -73,18 +108,17 @@ export default {
             .add-form__title Добавить варианты ответов
 
             select(name="responseType" v-model="responseType" autocomplete="off")
-                option(value="" selected) Выберите тип ответов
-                option(value="radio") Один вариант ответа
+                option(value="radio" selected) Один вариант ответа
                 option(value="checkbox") Несколько вариантов ответа
                 option(value="radioFree") Один вариант ответа + свободный
                 option(value="checkboxFree") Несколько вариантов ответа + свободный
 
         .add-form__options 
 
-            .add-form__option Вариант 1
+            .add-form__option(v-for="option in responseOptions") {{option}}
 
-        input(type="text").add-form__input
-        button().add-form__button Добавить вариант ответа
+        input(type="text" v-model="optionText").add-form__input
+        button(@click="addOption(optionText)").add-form__button Добавить вариант ответа
 
 </template>
 

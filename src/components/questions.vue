@@ -29,7 +29,7 @@ export default {
         }
     },
     computed: {
-        ...mapState('questions',{
+        ...mapState('questions', {
             questions: state => state.questions,
         }),
         ...mapState('quizzes', {
@@ -38,6 +38,11 @@ export default {
         id() {
             return this.$route.params.id;
         },
+    },
+    created() {
+        if(this.quizzes) {
+            this.setQuestions( { id: this.$route.params.id } );
+        }
     },
     watch: {
         quizzes(newVal, oldVal) {
@@ -53,18 +58,21 @@ export default {
 
 <template lang="pug">
 
-.questions(v-if="questions")
+.questions-wrapper
 
-    router-link(:to="{path: '/'}").quiz-title Вернуться к опросам
+    .questions(v-if="questions")
 
-    h1.quiz-title Вопросы  # {{id}}
+        router-link(:to="{path: '/'}").quiz-title Вернуться к опросам
 
-    .questions-form
-        input(v-model="questionText" name="questionText" placeholder="Новый вопрос").questions-form__input
-        button(@click="send({text: questionText, link: questions._links.self.href, quiz_id: id, type: questionType})").questions-form__submit Добавить
+        h1.quiz-title Вопросы  # {{id}}
 
-    question(v-for="question in questions._embedded.items" :key="question.id" :question="question") 
+        .questions-form
+            input(v-model="questionText" name="questionText" placeholder="Новый вопрос").questions-form__input
+            button(@click="send({text: questionText, link: questions._links.self.href, quiz_id: id, type: questionType})").questions-form__submit Добавить
 
-    pager(:id="id")
+        question(v-for="question in questions._embedded.items" :key="question.id" :question="question") 
 
+        pager(:id="id")
+
+    .questions__loading(v-else="questions") Загрузка...
 </template>
