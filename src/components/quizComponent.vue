@@ -10,8 +10,16 @@ export default {
     },
     methods: {
         ...mapActions('quizzes', [
-            'deleteItem'
+            'deleteItem',
+            'updateQuiz',
         ]),
+        updateVisibility() {
+            this.quiz.visible = !this.quiz.visible;
+            this.send();
+        },
+        send() {
+            this.updateQuiz(this.quiz);
+        },
 
     },
     data: function () {
@@ -35,11 +43,12 @@ export default {
 
     .quiz__date(v-bind:class="{ quiz__date_white: deleting }") {{ quiz.creationDate }}
 
-    input(:value="quiz.sort").quiz__sort  
+    input(v-model="quiz.sort" @change="send()").quiz__sort
 
     .quiz__actions
 
-        .quiz__visibility {{ quiz.visible }}
+        .quiz__visibility.quiz__visibility_on(v-if="quiz.visible" @click="updateVisibility()")
+        .quiz__visibility.quiz__visibility_off(v-else)
 
         .quiz__delete(@click="deleting=true")
 

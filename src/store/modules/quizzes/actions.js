@@ -57,4 +57,28 @@ export default {
         context.dispatch('changePage', context.state.quizzesPage);
     },
 
-}
+    async updateQuiz(context, params) {
+
+        let quiz = {
+            id: params.id,
+            title: params.title,
+            creationDate: params.creationDate,
+            visible: params.visible,
+            sort: params.sort,
+        };
+
+        let response = await fetch(params._links.self.href, {
+            method: "PUT",
+            body: JSON.stringify(quiz),
+        });
+
+        if(response.ok) {
+            sf.alert([{text: "Сохранено", type: "ok"}]);
+        } else {
+            sf.alert([{ text: "Ошибка", type: 'err' }]);
+        };
+
+
+    },
+
+};
