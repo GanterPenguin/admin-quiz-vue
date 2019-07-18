@@ -108,11 +108,11 @@ export default {
     },
 
     async updateSort(context, params) {
-        let link = context.state.questions._links.self.href;
+        let link = `${context.rootState.apiData._links.self.href}/quizzes/sort`;
         let id = params.id;
         let sort = params.sort;
         let body = { id : id, sort: sort };
-        let response = await fetch(`${link}/sort`, {
+        let response = await fetch(link, {
             method: "PATCH",
             body: JSON.stringify(body),
         });
