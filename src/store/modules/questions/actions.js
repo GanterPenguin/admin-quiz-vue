@@ -91,7 +91,7 @@ export default {
     },
 
     async updateVisibility(context, params) {
-        let visibility = params.visibility === "1" ? 1 : 0;
+        let visibility = params.visibility;
         let body = { "visible" : visibility };
         let response = await fetch(`${params.link}/visible`, {
             method: "PUT",
@@ -100,16 +100,18 @@ export default {
 
         if(response.ok) {
             sf.alert([{text: "Сохранено", type: "ok"}]);
+            let result = await response.json();
+            return result;
         } else {
             sf.alert([{ text: "Ошибка", type: 'err' }]);
         };
     },
 
     async updateSort(context, params) {
-        let link = context.state.quizzes._links.self.href;
+        let link = context.state.questions._links.self.href;
         let id = params.id;
         let sort = params.sort;
-        let body = { id : sort };
+        let body = { id : id, sort: sort };
         let response = await fetch(`${link}/sort`, {
             method: "PATCH",
             body: JSON.stringify(body),
@@ -118,9 +120,8 @@ export default {
         if(response.ok) {
             sf.alert([{text: "Сохранено", type: "ok"}]);
             let id = params.quiz_id;
-            let link = context.state.questionsPage;
 
-            context.dispatch('setQuestions', { id, link });
+            context.dispatch('setQuestions', { id });
         } else {
             sf.alert([{ text: "Ошибка", type: 'err' }]);
         };

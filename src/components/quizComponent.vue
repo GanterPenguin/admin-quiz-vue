@@ -14,10 +14,10 @@ export default {
             'updateVisibility',
             'updateSort',
         ]),
-        changeVisibility(visibility) {
+        async changeVisibility(visibility) {
             let link = this.quiz._links.self.href;
-            //let visibility = this.quiz.visible;
-            this.updateVisibility({ link: link, visibility: visibility });
+            let result = await this.updateVisibility({ link: link, visibility: visibility });
+            this.quiz.visible = result.visible;
         },
         changeSort() {
             let id = this.quiz.id;
@@ -51,8 +51,8 @@ export default {
 
     .quiz__actions
 
-        .quiz__visibility.quiz__visibility_on(v-if="quiz.visible==='1'" @click="changeVisibility(1)")
-        .quiz__visibility.quiz__visibility_off(v-else @click="changeVisibility(0)")
+        .quiz__visibility.quiz__visibility_on(v-if="quiz.visible =='1'" @click="changeVisibility(0)")
+        .quiz__visibility.quiz__visibility_off(v-else @click="changeVisibility(1)")
 
         .quiz__delete(@click="deleting=true")
 
