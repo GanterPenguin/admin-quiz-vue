@@ -12,12 +12,24 @@ export default {
         ...mapActions('questions', [
             'deleteQuestion',
             'patchResponse',
+            'updateVisibility',
+            'updateSort',
         ]),
         addOption(text) {
             this.responseOptions.push(text);
             this.optionText = '';
             this.patchResponse({ link: this.question._links.self.href, options: this.responseOptions, type: this.responseType });
-        }
+        },
+        changeVisibility(visibility) {
+            let link = this.question._links.self.href;
+            //let visibility = this.question.visible;
+            this.updateVisibility({ link: link, visibility: visibility });
+        },
+        changeSort() {
+            let id = this.question.id;
+            let sort = this.question.sort;
+            this.updateSort({ id: id, sort: sort });
+        },
     },
     data: function () {
         return {
@@ -85,13 +97,14 @@ export default {
 
         .question__date(v-bind:class="{ question__date_white: deleting }")
 
-        input.question__sort(:value="question.sort") 
+        input(v-model="question.sort" @change="changeSort()").question__sort
 
         .question__actions
 
             .question__add(@click="adding=!adding")
 
-            .question__visibility {{ question.visible }}
+            .question__visibility.question__visibility_on(v-if="question.visible==='1'" @click="changeVisibility(1)")
+            .question__visibility.question__visibility_off(v-else @click="changeVisibility(0)")
 
             .question__delete(@click="deleting=true")
 

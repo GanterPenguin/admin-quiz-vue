@@ -12,19 +12,17 @@ export default {
         ...mapActions('quizzes', [
             'deleteItem',
             'updateVisibility',
+            'updateSort',
         ]),
-        updateQuizVisibility() {
-            if(this.quiz.visible === "1") {
-                this.quiz.visible = "0";
-            } else {
-                this.quiz.visible = "1";
-            };
-            this.send();
-        },
-        send() {
+        changeVisibility(visibility) {
             let link = this.quiz._links.self.href;
-            let visibility = this.quiz.visible;
+            //let visibility = this.quiz.visible;
             this.updateVisibility({ link: link, visibility: visibility });
+        },
+        changeSort() {
+            let id = this.quiz.id;
+            let sort = this.quiz.sort;
+            this.updateSort({ id: id, sort: sort });
         },
 
     },
@@ -49,12 +47,12 @@ export default {
 
     .quiz__date(v-bind:class="{ quiz__date_white: deleting }") {{ quiz.creationDate }}
 
-    input(v-model="quiz.sort" @change="send()").quiz__sort
+    input(v-model="quiz.sort" @change="changeSort()").quiz__sort
 
     .quiz__actions
 
-        .quiz__visibility.quiz__visibility_on(v-if="quiz.visible==='1'" @click="updateQuizVisibility()")
-        .quiz__visibility.quiz__visibility_off(v-else @click="updateQuizVisibility()")
+        .quiz__visibility.quiz__visibility_on(v-if="quiz.visible==='1'" @click="changeVisibility(1)")
+        .quiz__visibility.quiz__visibility_off(v-else @click="changeVisibility(0)")
 
         .quiz__delete(@click="deleting=true")
 

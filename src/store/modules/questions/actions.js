@@ -90,4 +90,40 @@ export default {
 
     },
 
+    async updateVisibility(context, params) {
+        let visibility = params.visibility === "1" ? 1 : 0;
+        let body = { "visible" : visibility };
+        let response = await fetch(`${params.link}/visible`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+        });
+
+        if(response.ok) {
+            sf.alert([{text: "Сохранено", type: "ok"}]);
+        } else {
+            sf.alert([{ text: "Ошибка", type: 'err' }]);
+        };
+    },
+
+    async updateSort(context, params) {
+        let link = context.state.quizzes._links.self.href;
+        let id = params.id;
+        let sort = params.sort;
+        let body = { id : sort };
+        let response = await fetch(`${link}/sort`, {
+            method: "PATCH",
+            body: JSON.stringify(body),
+        });
+
+        if(response.ok) {
+            sf.alert([{text: "Сохранено", type: "ok"}]);
+            let id = params.quiz_id;
+            let link = context.state.questionsPage;
+
+            context.dispatch('setQuestions', { id, link });
+        } else {
+            sf.alert([{ text: "Ошибка", type: 'err' }]);
+        };
+    },
+
 };
