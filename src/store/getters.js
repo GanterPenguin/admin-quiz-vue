@@ -8,7 +8,7 @@ export default {
             } catch(e) {
                 return [];
             }
-        }
+        };
     },
     getQuestions(state, getters) {
         return _ => {
@@ -17,7 +17,7 @@ export default {
             } catch(e) {
                 return undefined;
             }
-        }
+        };
     },
     getAnswers(state, getters) {
         return _ => {
@@ -26,6 +26,6 @@ export default {
             } catch(e) {
                 return [];
             }
-        }
+        };
     },
-}
+};

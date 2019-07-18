@@ -57,21 +57,15 @@ export default {
         context.dispatch('changePage', context.state.quizzesPage);
     },
 
-    async updateQuiz(context, params) {
+    async updateVisibility(context, params) {
 
-        let visible = params.visible ? 1 : 0;
+        let visibility = params.visibility === "1" ? 1 : 0;
 
-        let quiz = {
-            id: params.id,
-            title: params.title,
-            creationDate: params.creationDate,
-            visible: visible,
-            sort: params.sort,
-        };
+        let body = { "visible" : visibility };
 
-        let response = await fetch(params._links.self.href, {
+        let response = await fetch(`${params.link}/visible`, {
             method: "PUT",
-            body: JSON.stringify(quiz),
+            body: JSON.stringify(body),
         });
 
         if(response.ok) {
@@ -79,8 +73,6 @@ export default {
         } else {
             sf.alert([{ text: "Ошибка", type: 'err' }]);
         };
-
-
     },
 
 };

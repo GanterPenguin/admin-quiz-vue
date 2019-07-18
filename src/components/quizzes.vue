@@ -1,4 +1,5 @@
-<script>    import { mapGetters, mapActions, mapState } from 'vuex';
+<script>
+import { mapGetters, mapActions, mapState } from 'vuex';
 import Pager from './pagerQuizzes';
 import Quiz from './quizComponent';
 

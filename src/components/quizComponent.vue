@@ -11,14 +11,20 @@ export default {
     methods: {
         ...mapActions('quizzes', [
             'deleteItem',
-            'updateQuiz',
+            'updateVisibility',
         ]),
-        updateVisibility() {
-            this.quiz.visible = !this.quiz.visible;
+        updateQuizVisibility() {
+            if(this.quiz.visible === "1") {
+                this.quiz.visible = "0";
+            } else {
+                this.quiz.visible = "1";
+            };
             this.send();
         },
         send() {
-            this.updateQuiz(this.quiz);
+            let link = this.quiz._links.self.href;
+            let visibility = this.quiz.visible;
+            this.updateVisibility({ link: link, visibility: visibility });
         },
 
     },
@@ -47,8 +53,8 @@ export default {
 
     .quiz__actions
 
-        .quiz__visibility.quiz__visibility_on(v-if="quiz.visible" @click="updateVisibility()")
-        .quiz__visibility.quiz__visibility_off(v-else)
+        .quiz__visibility.quiz__visibility_on(v-if="quiz.visible==='1'" @click="updateQuizVisibility()")
+        .quiz__visibility.quiz__visibility_off(v-else @click="updateQuizVisibility()")
 
         .quiz__delete(@click="deleting=true")
 
