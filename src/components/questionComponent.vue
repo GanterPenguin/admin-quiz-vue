@@ -46,13 +46,18 @@ export default {
                         type: value,
                         options: [],
                     };
+                    this.patchResponse({ link: this.question._links.self.href, type: this.responseType });
                 };
             },
         },
         responseOptions: {
             get() {
                 if(this.question._embedded.response) {
-                    return this.question._embedded.response.options;
+                    if(this.question._embedded.response.options) {
+                        return this.question._embedded.response.options;
+                    } else {
+                        return [];
+                    }
                 } else {
                     return [];
                 };
@@ -127,7 +132,9 @@ export default {
                 option(value="radioFree") Один вариант ответа + свободный
                 option(value="checkboxFree") Несколько вариантов ответа + свободный
 
-        .add-form__options 
+        .add-form__options(v-if="responseOptions")
+
+            .add-form__title Варианты ответов:
 
             .add-form__option(v-for="option in responseOptions") {{option}}
 

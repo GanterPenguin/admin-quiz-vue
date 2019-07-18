@@ -108,7 +108,7 @@ export default {
     },
 
     async updateSort(context, params) {
-        let link = `${context.rootState.apiData._links.self.href}/quizzes/sort`;
+        let link = `${context.rootState.apiData._links.self.href}/questions/sort`;
         let id = params.id;
         let sort = params.sort;
         let body = { id : id, sort: sort };
