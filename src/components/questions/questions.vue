@@ -15,7 +15,7 @@ export default {
             'appendQuestion',
         ]),
         send(object){
-            if(object.text.length>0){
+            if(object.text.length > 3){
                 this.appendQuestion(object);
                 this.questionText = '';
             }
@@ -35,6 +35,12 @@ export default {
         ...mapState('quizzes', {
             quizzes: state => state.quizzes,
         }),
+        ...mapGetters('quizzes', [
+            'getQuizById'
+        ]),
+        quiz() {
+            return this.getQuizById(this.id);
+        },
         id() {
             return this.$route.params.id;
         },
@@ -60,15 +66,15 @@ export default {
 
 .questions-wrapper
 
-    .questions(v-if="questions")
+    .questions(v-if="questions && quiz")
 
-        router-link(:to="{path: '/'}").quiz-title Вернуться к опросам
+        router-link(:to="{path: '/'}").questions__link-back Вернуться к опросам
 
-        h1.quiz-title Вопросы  # {{id}}
+        h1.quiz-title Опрос {{quiz.title}}
 
-        .questions-form
+        form.questions-form
             input(v-model="questionText" name="questionText" placeholder="Новый вопрос").questions-form__input
-            button(@click="send({text: questionText, link: questions._links.self.href, quiz_id: id, type: questionType})").questions-form__submit Добавить
+            input(type="submit" value="Добавить" @click="send({text: questionText, link: questions._links.self.href, quiz_id: id, type: questionType})").questions-form__submit
 
         question(v-for="question in questions._embedded.items" :key="question.id" :question="question") 
 

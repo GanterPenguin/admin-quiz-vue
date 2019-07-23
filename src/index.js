@@ -6,8 +6,8 @@ import { mapActions } from 'vuex';
 import Layout from './layout';
 import store from './store';
 
-import QuizzesComponent from './components/quizzes';
-import QuestionsComponent from './components/questions';
+import QuizzesComponent from './components/quizzes/quizzes';
+import QuestionsComponent from './components/questions/questions';
 
 const routes = [
     { path: '/', component: QuizzesComponent },

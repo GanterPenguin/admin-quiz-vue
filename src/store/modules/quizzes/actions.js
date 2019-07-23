@@ -54,7 +54,8 @@ export default {
             throw new Error('Connection error');
         }
 
-        context.dispatch('changePage', context.state.quizzesPage);
+        await context.dispatch('resort');
+        await context.dispatch('changePage', context.state.quizzesPage);
     },
 
     async updateVisibility(context, params) {
@@ -70,7 +71,7 @@ export default {
             let result = await response.json();
             return result;
         } else {
-            sf.alert([{ text: "Ошибка", type: 'err' }]);
+            sf.alert([{ text: "Ошибка, повторите попытку позже.", type: 'err' }]);
         };
     },
 
@@ -87,7 +88,41 @@ export default {
             sf.alert([{text: "Сохранено", type: "ok"}]);
             context.dispatch('changePage', context.state.quizzesPage);
         } else {
-            sf.alert([{ text: "Ошибка", type: 'err' }]);
+            sf.alert([{ text: "Ошибка, повторите попытку позже.", type: 'err' }]);
+        };
+    },
+
+    async updateTitle(context, params) {
+        let title = params.title;
+        let creationDate = params.creationDate;
+        let body = { 
+            "title" : title,
+            "creationDate": creationDate,
+
+        };
+        let response = await fetch(`${params.link}`, {
+            method: "PUT",
+            body: JSON.stringify(body),
+        });
+
+        if(response.ok) {
+            sf.alert([{text: "Сохранено", type: "ok"}]);
+            let result = await response.json();
+            return result;
+        } else {
+            sf.alert([{ text: "Ошибка, повторите попытку позже.", type: 'err' }]);
+        };
+    },
+
+    async resort(context, params) {
+        let link = context.state.quizzes._links.self.href;
+        let response = await fetch(`${link}/resort`, {
+            method: "PATCH",
+        });
+        if(response.ok) {
+            //sf.alert([{text: "Сохранено", type: "ok"}]);
+        } else {
+            //sf.alert([{ text: "Ошибка", type: 'err' }]);
         };
     },
 

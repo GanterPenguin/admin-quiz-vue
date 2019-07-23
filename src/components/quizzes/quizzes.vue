@@ -56,8 +56,9 @@ export default {
 
         h1.quiz-title Опросы
 
-        input(v-model="quizTitle" placeholder="Новый опрос")
-        button(@click="send(quizTitle)") Добавить
+        form.quiz-form
+            input(v-model="quizTitle" placeholder="Новый опрос").quiz-form__input
+            input(@click="send(quizTitle)" type="submit" value="Добавить").quiz-form__submit
 
         quiz(v-for="quiz in quizzes._embedded.items" v-bind:key="quiz.id" :quiz="quiz")
 
@@ -66,7 +67,3 @@ export default {
     .quiz-main__loading(v-else="quizzes") Загрузка...
 
 </template>
-
-<style lang="scss">
-@import "./src/scss/main.scss";
-</style>

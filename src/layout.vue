@@ -1,11 +1,9 @@
 <script>
 import { mapGetters, mapActions, mapState } from 'vuex';
-import Pager from './components/pagerQuestions';
 
 export default {
 
     components: {
-        'pager': Pager,
     },
     methods: {
         ...mapActions([

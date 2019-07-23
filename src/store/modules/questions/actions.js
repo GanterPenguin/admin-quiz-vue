@@ -54,7 +54,8 @@ export default {
         let id = params.quiz_id;
         let link = context.state.questionsPage;
 
-        context.dispatch('setQuestions', { id, link });
+        await context.dispatch('resort');
+        await context.dispatch('setQuestions', { id, link });
     },
 
     async patchResponse(context, params) {
@@ -85,7 +86,34 @@ export default {
         if(response.ok) {
             sf.alert([{text: "Сохранено", type: "ok"}]);
         } else {
-            sf.alert([{ text: "Ошибка", type: 'err' }]);
+            sf.alert([{ text: "Ошибка, повторите попытку позже.", type: 'err' }]);
+        };
+
+    },
+
+    async patchContent(context, params) {
+        let patch = [];
+        let link = `${params.link}/content`;
+        if(params.text) {
+            let bodyType = {
+                op: "add",
+                path: '/text',
+                value: params.text,
+            };
+            patch.push(bodyType);
+        }
+
+        let response = await fetch (link, {
+            method: "PATCH",
+            body: JSON.stringify(patch),
+        });
+
+        if(response.ok) {
+            sf.alert([{text: "Сохранено", type: "ok"}]);
+            let result = await response.json();
+            return result._embedded.content;
+        } else {
+            sf.alert([{ text: "Ошибка, повторите попытку позже.", type: 'err' }]);
         };
 
     },
@@ -103,7 +131,7 @@ export default {
             let result = await response.json();
             return result;
         } else {
-            sf.alert([{ text: "Ошибка", type: 'err' }]);
+            sf.alert([{ text: "Ошибка, повторите попытку позже.", type: 'err' }]);
         };
     },
 
@@ -123,7 +151,20 @@ export default {
 
             context.dispatch('setQuestions', { id });
         } else {
-            sf.alert([{ text: "Ошибка", type: 'err' }]);
+            sf.alert([{ text: "Ошибка, повторите попытку позже.", type: 'err' }]);
+        };
+    },
+
+    async resort(context, params) {
+        let link = `${context.state.questions._links.self.href}/resort`;
+        let response = await fetch(link, {
+            method: "PATCH",
+        });
+
+        if(response.ok) {
+            //sf.alert([{text: "Сохранено", type: "ok"}]);
+        } else {
+            //sf.alert([{ text: "Ошибка", type: 'err' }]);
         };
     },
 
