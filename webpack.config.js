@@ -3,8 +3,11 @@
 const path = require('path');
 const VueLoaderPlugin = require('vue-loader/lib/plugin');
 
+const mode = process.env.NODE_ENV ? process.env.NODE_ENV : 'production';
+console.log(`Running ${mode} mode`);
+
 module.exports = {
-    mode: 'development',
+    mode,
     devtool: 'inline-source-map',
     entry: './src/index.js',
     module: {
