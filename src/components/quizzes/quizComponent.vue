@@ -64,6 +64,8 @@ export default {
 
     router-link(:to="{path: 'quiz/' + quiz.id}" v-bind:class="{ quiz__title_white: deleting }").quiz__title {{ quiz.title }}
 
+    router-link(:to="{path: 'statistics/' + quiz.id}" v-bind:class="{ quiz__title_white: deleting }").quiz__title Статистика
+
     input.quiz__title-input(v-if="editing" placeholder="Введите новое название" v-model="newTitle")
 
     .quiz__date(v-bind:class="{ quiz__date_white: deleting }") {{ quiz.creationDate }}

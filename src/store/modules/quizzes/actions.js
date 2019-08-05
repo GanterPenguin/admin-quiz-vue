@@ -17,6 +17,17 @@ export default {
 
     },
 
+    async initStatistics(context, params) {
+        let link = `${context.state.quizzes._links.self.href}/${params.id}/response`;
+        let response = await fetch(link);
+        if(!response.ok) {
+            throw new Error("Connection error");
+        }
+        let statisticsData = await response.json();
+
+        context.commit("initStatistics", statisticsData);
+    },
+
     async changePage(context, link) {
 
         let apiQuizzes = await fetch(link);

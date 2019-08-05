@@ -54,5 +54,6 @@ export default {
 </template>
 
 <style lang="scss">
+@import "../node_modules/quasar/dist/quasar.min.css";
 @import "./src/scss/main.scss";
 </style>

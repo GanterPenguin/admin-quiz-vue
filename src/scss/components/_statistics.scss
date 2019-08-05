@@ -1,0 +1,52 @@
+.statistics {
+
+    display: flex;
+    flex-direction: column;
+
+    &__item {
+
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 10px;
+
+    }
+
+    &__text {
+
+        font-size: 18px;
+
+    }
+
+    &__wrapper {
+
+        padding-top: 15px;
+        padding-left: 15px;
+        box-sizing: border-box;
+
+    }
+
+    &__option {
+
+        margin-bottom: 10px;
+
+    }
+
+    &__progress-bar {
+
+        display: flex;
+
+    }
+
+    &__progress-line {
+    
+        flex-shrink: 0;
+    
+    }
+
+    &__progress-count {
+
+        margin-left: 10px;
+
+    }
+
+}

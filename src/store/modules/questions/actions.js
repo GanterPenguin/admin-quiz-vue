@@ -3,10 +3,13 @@
 export default {
 
     async setQuestions(context, params) {
+        let link = "";
         if(params.link){
-            let link = `${params.link}/${params.id}/questions`;
+            link = `${params.link}/${params.id}/questions`;
+        } else if (params.statistics) {
+            link = `${context.rootState.apiData._links.self.href}/quizzes/${params.id}/questions?limit=1000`;
         } else {
-            let link = `${context.rootState.apiData._links.self.href}/quizzes/${params.id}/questions`;
+            link = `${context.rootState.apiData._links.self.href}/quizzes/${params.id}/questions`;
         }
 
         let response = await fetch(link);
@@ -16,7 +19,7 @@ export default {
         }
 
         let questions = await response.json(); 
-        let link = params.link;
+        link = params.link;
 
         context.commit('setQuestions', { questions, link });
 
