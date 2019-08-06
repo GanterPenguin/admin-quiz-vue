@@ -4,8 +4,8 @@ Installation
 cd $PROJECT_ROOT
 mkdir submodules
 cd submodules
-git submodule add ssh://git@gitea.websm.io:2222/dmarov/admin-order-vue.git
-cd admin-order-vue
+git submodule add ssh://git@gitea.websm.io:2222/Buldakov/admin-quiz-vue.git
+cd admin-quiz-vue
 yarn
 ```
 
@@ -31,7 +31,7 @@ to update submodule
 add
 ```html
 <div id='orders'>
-<script src='/admin/js/orders.bundle.js'></script>
+<script src='/admin/js/quiz.bundle.js'></script>
 ```
 to template
 
