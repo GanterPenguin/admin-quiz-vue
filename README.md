@@ -1,3 +1,5 @@
+Admin panel module for managing quizzes. 
+
 Installation
 
 ```
