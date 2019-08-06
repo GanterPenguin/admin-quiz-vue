@@ -39,7 +39,7 @@ let vm = new Vue({
         ...mapActions(['init']),
     },
     created() {
-        this.init(this.params)
+        //this.init(this.params)
     },
     el,
     render: h => h(Layout),

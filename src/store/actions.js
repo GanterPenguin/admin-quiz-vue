@@ -13,6 +13,7 @@ export default {
         let data = await apiData.json();
 
         context.commit('init', data);
+        return data;
 
     },
 

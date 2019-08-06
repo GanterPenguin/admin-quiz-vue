@@ -12,7 +12,12 @@ export default {
         ...mapActions('quizzes', [
             'initQuizzes',
         ]),
-
+        async initApi() {
+            if(!this.initializedApi) {
+                let data = await this.init(this.$root.params);
+                this.initQuizzes(data);
+            }
+        }
     },
     data: function () {
         return {
@@ -28,17 +33,8 @@ export default {
         }),
 
     },
-    watch: {
-        apiData(newVal, oldVal) {
-            if(!this.initializedQuizzes) {
-                this.initQuizzes(newVal);
-            }
-        },
-    },
     created() {
-        if(!this.initializedApi) {
-            this.init(this.$root.params);
-        }
+        this.initApi();
     },
 
 }
